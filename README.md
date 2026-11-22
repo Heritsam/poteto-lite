@@ -1,0 +1,68 @@
+# poteto-lite
+
+A cheap, in-chat version of the `poteto-mode` skill for Claude Code.
+
+## About
+
+[pstack](https://github.com/cursor/plugins/tree/main/pstack) ships a skill called `poteto-mode`. It gives an agent good habits: name the data first, make the smallest change, trace bugs to their root cause, and prove the result on the real thing. It also runs a heavy process. It reads about 55 KB of instructions before any work, hands steps to helper agents that each reread the main file, and runs a multi-model review before a PR.
+
+On a small Claude plan that adds up. `poteto-lite` keeps the habits and the cleanup steps and drops the machinery. It runs entirely in the current chat. It starts no subagents, runs no review panel, and reads no playbooks.
+
+## What it does
+
+- **Habits.** Data shape first, smallest change, root cause for bugs, proof on the real artifact, no needless questions on reversible work.
+- **Cleanup before finishing.** Runs `deslop` on the diff, does a comment pass in the chat, and runs `unslop` on any prose it wrote.
+- **Plain replies.** Short sentences, claims labeled measured, inferred or guess, and no invented links or results.
+- **Escalation.** When a task touches many files, needs a hard-to-undo design choice, or has a bug with no known cause, it stops, says so, and suggests `poteto-mode`. It never escalates on its own.
+
+## Installation
+
+### Requirements
+
+- [Claude Code](https://claude.com/claude-code)
+- The [t3-pstack](https://github.com/chhoumann/t3-pstack) plugin, which provides the `t3-pstack:deslop` and `t3-pstack:unslop` skills that the cleanup steps call
+
+### Install
+
+```bash
+git clone https://github.com/Heritsam/poteto-lite ~/.claude/skills/poteto-lite
+```
+
+Restart Claude Code, or reload your skills, so `/poteto-lite` appears.
+
+## Usage
+
+```
+/poteto-lite fix the sorting bug in the table component
+```
+
+Use it for small or medium changes, a bug with an obvious cause, or a question about code. Switch to the full skill when a task is big:
+
+```
+/t3-pstack:poteto-mode migrate the auth layer to the new session API
+```
+
+## poteto-lite and poteto-mode
+
+| | `poteto-mode` | `poteto-lite` |
+|---|---|---|
+| Who does the work | Helper agents on configured models | The current chat |
+| Reads first | About 55 KB, then a playbook | Nothing extra |
+| Review | Multi-model panel before a PR | None unless you ask |
+| PRs | Links, watches and babysits them | None |
+| Cleanup | deslop, no-comments and unslop through helpers | The same three steps, run in the chat |
+| Cost | High | Close to a normal chat |
+
+## Limits
+
+- I wrote this from reading `poteto-mode`. It is a summary, not a copy, and I have not yet run it on a long task.
+- It reads no playbooks, so it only partly copies their discipline, such as committing the failing test before the fix.
+- Its comment pass is lighter than the `no-comments` skill, which uses a separate reviewer agent. Run `/t3-pstack:no-comments` when you want that.
+
+## Credits
+
+`poteto-mode` and pstack are by Lauren Tan. The Claude Code port is by Michael Denyer, and the T3 Code port is [chhoumann/t3-pstack](https://github.com/chhoumann/t3-pstack). This repository is an independent, unofficial companion and is not affiliated with them.
+
+## License
+
+MIT. See [`LICENSE`](LICENSE).
