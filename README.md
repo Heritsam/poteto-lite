@@ -19,16 +19,21 @@ On a small Claude plan that adds up. `poteto-lite` keeps the habits and the clea
 
 ### Requirements
 
-- [Claude Code](https://claude.com/claude-code)
-- The [t3-pstack](https://github.com/chhoumann/t3-pstack) plugin, which provides the `t3-pstack:deslop` and `t3-pstack:unslop` skills that the cleanup steps call
+- An agent that reads `SKILL.md` skills: Claude Code, Cursor, or Antigravity
+- Optional: the [t3-pstack](https://github.com/chhoumann/t3-pstack) plugin on Claude Code. Its `t3-pstack:deslop` and `t3-pstack:unslop` skills run the cleanup steps. Without them, the skill applies short built-in versions of the same rules.
 
 ### Install
 
+Clone it once, then link it into each tool's skills folder.
+
 ```bash
-git clone https://github.com/Heritsam/poteto-lite ~/.claude/skills/poteto-lite
+git clone https://github.com/Heritsam/poteto-lite ~/.agents/skills/poteto-lite
+ln -s ~/.agents/skills/poteto-lite ~/.claude/skills/poteto-lite                     # Claude Code
+ln -s ~/.agents/skills/poteto-lite ~/.cursor/skills/poteto-lite                     # Cursor
+ln -s ~/.agents/skills/poteto-lite ~/.gemini/antigravity/global_skills/poteto-lite  # Antigravity
 ```
 
-Restart Claude Code, or reload your skills, so `/poteto-lite` appears.
+Link only the tools you use. Restart the tool, or reload its skills, so `poteto-lite` appears.
 
 ## Usage
 
@@ -55,6 +60,7 @@ Use it for small or medium changes, a bug with an obvious cause, or a question a
 
 ## Limits
 
+- I have only run the Cursor and Antigravity setup as far as creating the links. I have not confirmed either tool loads the skill, so treat those two as untested.
 - I wrote this from reading `poteto-mode`. It is a summary, not a copy, and I have not yet run it on a long task.
 - It reads no playbooks, so it only partly copies their discipline, such as committing the failing test before the fix.
 - Its comment pass is lighter than the `no-comments` skill, which uses a separate reviewer agent. Run `/t3-pstack:no-comments` when you want that.

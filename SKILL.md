@@ -20,9 +20,9 @@ Work in this chat only. Start no subagents, no `delegate_task`, no panel review,
 
 Run these in this chat. They are small, so they stay in lite.
 
-1. **Code changed.** Invoke `t3-pstack:deslop` on the diff. It is about 700 bytes.
+1. **Code changed.** Run the `deslop` skill on the diff if your harness has one (`t3-pstack:deslop` on Claude Code). Otherwise apply its rules yourself. Remove comments that are unnecessary or off the local style. Remove defensive checks and try/catch that are abnormal for trusted code paths. Remove `any` casts used only to dodge type errors. Flatten deep nesting with early returns. Keep behavior unchanged and edits small.
 2. **Comments.** Do the no-comments pass yourself. Read the diff for comments and delete each one that is not a non-obvious why the code cannot show. Do not spawn comment-sicko. For the full subagent version, the user types `/t3-pstack:no-comments`.
-3. **Prose written.** Invoke `t3-pstack:unslop` on any doc, README, PR description, or commit message you wrote, and on your final reply when it runs longer than a few sentences.
+3. **Prose written.** Run the `unslop` skill (`t3-pstack:unslop` on Claude Code) on any doc, README, PR description, or commit message you wrote, and on your final reply when it runs longer than a few sentences. Without that skill, cut these yourself. AI vocabulary such as "additionally", "crucial", "delve", "pivotal" and "showcase". "Serves as" and "boasts" where "is" or "has" works. "Not just X, but Y". Em dashes, and colons used as mid-sentence connectors. Bold lead-ins that restate the line. Filler like "in order to" and "it is important to note". Chatbot phrases and flattery. Prefer active voice and plain words.
 
 Skip a step that has nothing to act on, and say so in one line.
 
@@ -36,4 +36,4 @@ Skip a step that has nothing to act on, and say so in one line.
 
 ## When to escalate
 
-If the task touches many files, needs a design choice that is hard to undo, or has a bug with no known cause after one real attempt, stop and say so in one sentence. Suggest `/t3-pstack:poteto-mode` and let the user decide. Do not escalate on your own.
+If the task touches many files, needs a design choice that is hard to undo, or has a bug with no known cause after one real attempt, stop and say so in one sentence. Suggest the full `poteto-mode` skill (`/t3-pstack:poteto-mode` on Claude Code, if installed) and let the user decide. Do not escalate on your own.
