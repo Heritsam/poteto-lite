@@ -30,7 +30,8 @@ Clone it once, then link it into each tool's skills folder.
 git clone https://github.com/Heritsam/poteto-lite ~/.agents/skills/poteto-lite
 ln -s ~/.agents/skills/poteto-lite ~/.claude/skills/poteto-lite                     # Claude Code
 ln -s ~/.agents/skills/poteto-lite ~/.cursor/skills/poteto-lite                     # Cursor
-ln -s ~/.agents/skills/poteto-lite ~/.gemini/antigravity/global_skills/poteto-lite  # Antigravity
+mkdir -p ~/.gemini/antigravity-cli/skills
+ln -s ~/.agents/skills/poteto-lite ~/.gemini/antigravity-cli/skills/poteto-lite     # Antigravity (agy and T3 Code)
 ```
 
 Link only the tools you use. Restart the tool, or reload its skills, so `poteto-lite` appears.
